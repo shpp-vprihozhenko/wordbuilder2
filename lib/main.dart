@@ -188,6 +188,13 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
           IosTextToSpeechAudioMode.defaultMode
       );
+    } else {
+      String defEng = await flutterTts.getDefaultEngine;
+      if (!defEng.contains('google')) {
+        var engines = await flutterTts.getEngines;
+        int gIdx = engines.indexWhere((element) => element.toString().contains('google'));
+        await flutterTts.setEngine(engines[gIdx]);
+      }
     }
     // ru-RU uk-UA en-US
     await flutterTts.setLanguage('ru-RU');
@@ -249,18 +256,23 @@ class _MyHomePageState extends State<MyHomePage> {
                   color: Colors.white
                 ),)
             ),
-            GestureDetector(
-              onTap: difDown,
-              child: Container(
-                decoration: const BoxDecoration(
-                  color: Colors.blue,
-                  shape: BoxShape.circle,
-                ),
-                width: 55, height: 55,
-                child: const Center(
-                    child: Icon(Icons.arrow_back_ios_new_rounded, size: 40, color: Colors.white,)
-                ),
-              ),
+            // GestureDetector(
+            //   onTap: difDown,
+            //   child: Container(
+            //     decoration: const BoxDecoration(
+            //       color: Colors.blue,
+            //       shape: BoxShape.circle,
+            //     ),
+            //     width: 55, height: 55,
+            //     child: const Center(
+            //         child: Icon(Icons.arrow_back_ios_new_rounded, size: 40, color: Colors.white,)
+            //     ),
+            //   ),
+            // ),
+            FloatingActionButton(
+              heroTag: 'down',
+                onPressed: difDown,
+                child: const Icon(Icons.arrow_back_ios_new_rounded, size: 40, color: Colors.white,)
             ),
             FloatingActionButton(
               heroTag: 'up',
@@ -268,7 +280,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: const Icon(Icons.arrow_forward_ios_outlined, size: 40, color: Colors.white,)
             ),
             FloatingActionButton(
-              heroTag: 'down',
+              heroTag: 'repeat',
                 onPressed: _repeatCurSyl,
                 child: const Icon(Icons.volume_up, size: 40, color: Colors.white,)
             ),
