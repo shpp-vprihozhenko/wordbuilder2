@@ -77,6 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void startLoop() async {
+    await Future.delayed(const Duration(milliseconds: 500));
     filteredWordsList = wordsList.where((el) => el.length == numCentralLetters).toList();
     formTargetWord();
     print('got targetWord $targetWord');
@@ -86,11 +87,9 @@ class _MyHomePageState extends State<MyHomePage> {
     print('targetWord $targetWord');
     if (isFirstRun) {
       isFirstRun = false;
-      flutterTts.speak('Привет');
-      await Future.delayed(const Duration(seconds: 1));
+      await flutterTts.speak('Привет');
       if (Platform.isAndroid) {
-        await Future.delayed(const Duration(seconds: 1));
-        await flutterTts.speak('Давай строить слова! Я назову слово, а ты - перетягивай буковки в середину, чтобы получилось загаданное слово.');
+        await flutterTts.speak('Давай строить слова! Я назову слово, а ты - перетя́гивай буковки в середину, чтобы получилось загаданное слово.');
       } else {
         await _speak('Давай строить слова! Я назову слово, а ты - перетягивай буковки в середину, чтоб получилось загаданное слово.');
       }
@@ -235,7 +234,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: buildMainContainer(),
       bottomNavigationBar:
         Container(
-          color: Colors.blue[100],
+          color: Colors.brown,
           child: buildBottomRow(),
         )
     );
@@ -246,6 +245,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             FloatingActionButton(
+              backgroundColor: Colors.blueAccent,
               heroTag: 'about',
                 onPressed: (){
                   Navigator.push(context, MaterialPageRoute(builder: (context) => const About()),);
@@ -270,19 +270,22 @@ class _MyHomePageState extends State<MyHomePage> {
             //   ),
             // ),
             FloatingActionButton(
+              backgroundColor: Colors.blueAccent,
               heroTag: 'down',
                 onPressed: difDown,
                 child: const Icon(Icons.arrow_back_ios_new_rounded, size: 40, color: Colors.white,)
             ),
             FloatingActionButton(
+              backgroundColor: Colors.blueAccent,
               heroTag: 'up',
                 onPressed: difUp,
                 child: const Icon(Icons.arrow_forward_ios_outlined, size: 40, color: Colors.white,)
             ),
             FloatingActionButton(
+              backgroundColor: Colors.blueAccent,
               heroTag: 'repeat',
                 onPressed: _repeatCurSyl,
-                child: const Icon(Icons.volume_up, size: 40, color: Colors.white,)
+                child: const Icon(Icons.replay, size: 40, color: Colors.white,)
             ),
           ],
         );
